@@ -13,7 +13,11 @@
         <input type="text" id="titulo" placeholder="Titulo del libro" required>
         <input type="text" id="autor" placeholder="Autor del libro" required>
         <input type="number" id="anio" placeholder="Año del libro" required>
-        
+
+        <label>
+            <input type="checkbox" id="leido">
+            Leído
+        </label>
         
         <select id="genero" required>
             <option value="">Seleccionar género</option>
@@ -30,12 +34,17 @@
     <select id="filtroGenero" onchange="filtrarPorGenero()">
         <option value="todas">Todas</option>
     </select>
-
-    
-
+    <br>
+    <h4>Filtrar libros leidos/No leidos</h4>
+    <select id="filtroLeido" onchange="filtrarPorLeido()">
+        <option value="todos">Todos</option>
+        <option value="leidos">Leídos</option>
+        <option value="noLeidos">No leídos</option>
+    </select>
     <br>
     <br>
-    <button onclick="ordernarPorAnio()">Ordenar listado de autos por año</button>
+    <button onclick="ordernarPorAnio()">Ordenar listado de libros por año</button>
+    <br>
     <table border="1" id="tablaLibros">
         <thead>
             <tr>
@@ -44,6 +53,7 @@
                 <th>Autor</th>
                 <th>Año</th>
                 <th>genero</th>
+                <th>leido</th>
                 <th>Acciones</th>
             </tr>
         </thead>

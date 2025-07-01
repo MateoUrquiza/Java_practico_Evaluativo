@@ -9,11 +9,12 @@ const agregarLibro = () => {
     const autor = document.getElementById('autor').value.trim()
     const anio = document.getElementById('anio').value
     const genero = document.getElementById('genero').value.trim()
+    const leido = document.getElementById('leido').checked // un boolean para saber si el libro fue leído
 
-    if (titulo !== '' && autor !== '') {
-        if (anio >= 1900) {
+    if (titulo !== '' && autor !== '') { // Validamos que los campos no estén vacíos
+        if (anio >= 1900) { // Validamos que el año sea mayor o igual a 1900 
             if (editando) {
-                libros[indiceEditar] = { titulo, autor, anio, genero }
+                libros[indiceEditar] = { titulo, autor, anio, genero, leido }
                 editando = false
                 indiceEditar = null
                 document.querySelector('button[type="submit"]').innerText = 'Agregar libro'
@@ -28,7 +29,7 @@ const agregarLibro = () => {
                     return
                 }
 
-                libros.push({ titulo, autor, anio, genero })
+                libros.push({ titulo, autor, anio, genero, leido })
             }
 
             localStorage.setItem('libros', JSON.stringify(libros))
@@ -41,6 +42,7 @@ const agregarLibro = () => {
             document.getElementById('autor').value = ''
             document.getElementById('anio').value = ''
             document.getElementById('genero').value = ''
+            document.getElementById('leido').checked = false // Reseteamos el checkbox 
         } else {
             alert("Es muy viejo ese libro, ponga otro año ");
         }
@@ -98,6 +100,7 @@ const renderizarLibros = (lista = libros) => {
             <td>${libro.autor}</td>
             <td>${libro.anio}</td>
             <td>${libro.genero}</td>
+            <td>${libro.leido ? 'Sí' : 'No'}</td>
             
             <td>
                 <button onclick="editarLibros(${indexReal})">Editar</button>
@@ -115,7 +118,8 @@ const editarLibros = (index) => {
     document.getElementById('titulo').value = libro.titulo
     document.getElementById('autor').value = libro.autor
     document.getElementById('anio').value = libro.anio
-    // document.getElementById('buttonForm').innerText='Editar auto'
+    document.getElementById('genero').value = libro.genero
+    document.getElementById('leido').checked = libro.leido // Reseteamos el checkbox 
     document.querySelector('button[type="submit"]').innerText = 'Actualizar Libro'
     editando = true
     indiceEditar = index
@@ -170,6 +174,8 @@ const mostrarResumen = () => {
     // Filtrar auto mas antiguo
     const libroViejo = libros.reduce((nuevo, libro) => (libro.anio < nuevo.anio ? libro : nuevo), libros[0])
 
+    const leidos = libros.filter(libro => libro.leido).length
+    const noLeidos = libros.filter(libro => !libro.leido).length
 
     resumen.innerHTML = `
     <p>Total de libros: ${total}</p>
@@ -177,8 +183,9 @@ const mostrarResumen = () => {
     <p>libros posteriores a 2010: ${posterioresA2010}</p>
     <p>libro mas nuevo: ${libroNuevo.titulo} ${libroNuevo.autor} ${libroNuevo.anio}</p>
     <p>libro mas viejo: ${libroViejo.titulo} ${libroViejo.autor} ${libroViejo.anio}</p>
+    <p>Total de libros leídos: ${leidos}</p>
+    <p>Total de libros no leídos: ${noLeidos}</p> 
     `
-
 }
 
 
@@ -206,6 +213,22 @@ const filtrarPorGenero = () => {
         renderizarLibros(librosFiltrados)
     }   
 }
+
+const filtrarPorLeido = () => {
+    const filtro = document.getElementById('filtroLeido').value
+
+    let librosFiltrados = []
+
+    if (filtro === 'todos') {
+        librosFiltrados = libros
+    } else if (filtro === 'leidos') {
+        librosFiltrados = libros.filter(libro => libro.leido)
+    } else if (filtro === 'noLeidos') {
+        librosFiltrados = libros.filter(libro => !libro.leido)
+    }
+
+    renderizarLibros(librosFiltrados)
+} 
 
 // Evento que sirve para renderizar contenido una vez cardado el dom de la pagina inicial
 document.addEventListener('DOMContentLoaded', () => {
