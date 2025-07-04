@@ -157,7 +157,7 @@ const mostrarResumen = () => {
         return;
     }
 
-    // Total de autos
+    // Total de libros
     const total = libros.length
 
     // promedio de años
@@ -165,13 +165,13 @@ const mostrarResumen = () => {
 
     const promedio = Math.round(sumaAnios / total)
 
-    // filtro autos posteriores a 2015
+    // filtro libros posteriores a 2015
     const posterioresA2010 = libros.filter(libro => libro.anio > 2010).length
 
-    //  Filtrar auto mas nuevo
+    //  Filtrar libro mas nuevo
     const libroNuevo = libros.reduce((nuevo, libro) => (libro.anio > nuevo.anio ? libro : nuevo), libros[0])
 
-    // Filtrar auto mas antiguo
+    // Filtrar libro mas antiguo
     const libroViejo = libros.reduce((nuevo, libro) => (libro.anio < nuevo.anio ? libro : nuevo), libros[0])
 
     const leidos = libros.filter(libro => libro.leido).length
