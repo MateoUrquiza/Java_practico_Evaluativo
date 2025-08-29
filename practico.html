@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Libros</title>
+</head>
+
+<body>
+    <h2> - Gestor de Libros - </h2>
+    <form onsubmit="agregarLibro(); return false">
+        <input type="text" id="titulo" placeholder="Titulo del libro" required>
+        <input type="text" id="autor" placeholder="Autor del libro" required>
+        <input type="number" id="anio" placeholder="Año del libro" required>
+        
+        
+        <select id="genero" required>
+            <option value="">Seleccionar género</option>
+        </select>
+        
+        <button id="buttonForm" type="submit">Agregar libro</button>
+
+    </form>
+    <br>
+    <h4>Filtrar libros</h4>
+    <input type="text" id="busqueda" placeholder="Buscar titulo..." oninput="filtrarLibros()">
+    <br>
+    <h4>Filtrar libros por selector de genero </h4>
+    <select id="filtroGenero" onchange="filtrarPorGenero()">
+        <option value="todas">Todas</option>
+    </select>
+
+    
+
+    <br>
+    <br>
+    <button onclick="ordernarPorAnio()">Ordenar listado de autos por año</button>
+    <table border="1" id="tablaLibros">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>TItulo</th>
+                <th>Autor</th>
+                <th>Año</th>
+                <th>genero</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <h3>Resumen de libros</h3>
+    <div id="resumenLibros"></div>
+
+    <script src="./js/practico.js"></script>
+</body>
+
+</html>
