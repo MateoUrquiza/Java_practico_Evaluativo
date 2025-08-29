@@ -3,7 +3,7 @@ name: CD - Deploy
 on:
   push:
     branches:
-      - main
+      - CI/CD-actividad
 
 jobs:
   deploy:
@@ -22,5 +22,5 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
             cd ~/lemp-sites/mateo_urquiza &&
-            git pull origin main
+            git pull origin CI/CD-actividad
           "
